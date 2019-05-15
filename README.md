@@ -56,32 +56,32 @@ void TestPlugin::unload()
 */
 // Class factory to return a new instance of the plugin class
 
-PLUGINEXTERN Q_DECL_EXPORT  QPluginHelp * classFactory(QAppPluginInterface * theInterfacePointer)
+PLUGINEXTERN  QPluginHelp * classFactory(QAppPluginInterface * theInterfacePointer)
 {
 	return new TestPlugin(theInterfacePointer);
 }
 
 // Return the name of the plugin - note that we do not user class members as
 // the class may not yet be insantiated when this method is called.
-PLUGINEXTERN Q_DECL_EXPORT QString name()
+PLUGINEXTERN  QString name()
 {
 	return sName;
 }
 
 // Return the description
-PLUGINEXTERN Q_DECL_EXPORT QString description()
+PLUGINEXTERN  QString description()
 {
 	return sDescription;
 }
 
 // Return the version number for the plugin
-PLUGINEXTERN Q_DECL_EXPORT QString version()
+PLUGINEXTERN  QString version()
 {
 	return sPluginVersion;
 }
 
 // Delete ourself
-PLUGINEXTERN Q_DECL_EXPORT void unload(QPluginHelp * thePluginPointer)
+PLUGINEXTERN  void unload(QPluginHelp * thePluginPointer)
 {
 	delete thePluginPointer;
 }

@@ -1,11 +1,19 @@
 #pragma once
 
-#ifdef __cplusplus
-#define PLUGINEXPORT extern "C" EXPORT
-#define PLUGINEXTERN extern "C"
+#ifndef PLUGINEXTERN
+#ifdef Q_OS_WIN
+#  define PLUGINEXTERN extern "C" __declspec( dllexport )
+#  ifdef _MSC_VER
+// do not warn about C bindings returing QString
+#    pragma warning(disable:4190)
+#  endif
 #else
-#define PLUGINEXPORT EXPORT
-#define PLUGINEXTERN extern
+#  if defined(__GNUC__) || defined(__clang__)
+#    define PLUGINEXTERN extern "C" __attribute__ ((visibility ("default")))
+#  else
+#    define PLUGINEXTERN extern "C"
+#  endif
+#endif
 #endif
 
 // hack to workaround warnings when casting void pointers
