@@ -5,6 +5,7 @@ class QgsMapCanvas;
 // Interface class for exposing functions in HympApp for use by plugins
 class PLUGINHELP_EXPORT QAppPluginInterface : public QObject
 {
+	Q_OBJECT
 public:
 	QAppPluginInterface();
 	virtual ~QAppPluginInterface();
