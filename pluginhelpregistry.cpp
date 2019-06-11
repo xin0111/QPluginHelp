@@ -112,7 +112,8 @@ void QPluginHelpRegistry::loadCppPlugin(const QString& theFullPathName)
 	bool loaded = myLib.load();
 	if (!loaded)
 	{
-		qDebug() << (QObject::tr("Failed to load %1 (Reason: %2)").arg(myLib.fileName(), myLib.errorString()), QObject::tr("Plugins"));
+		QMessageBox::warning(0, QObject::tr("Failed Loading Plugin"),
+			myLib.errorString());
 		return;
 	}
 
@@ -140,32 +141,33 @@ void QPluginHelpRegistry::loadCppPlugin(const QString& theFullPathName)
 #ifndef Q_OS_WIN
 					baseName = baseName.mid(3);
 #endif
-					o->setObjectName(QString("hymp_plugin_%1").arg(baseName));				
+					o->setObjectName(QString("x_plugin_%1").arg(baseName));				
 				}
 
 				if (!o->parent())
 				{
-					qDebug() << (QString("setting plugin parent"));
+					qDebug() << (QString("plugin %1 setting parent").arg(baseName));
 					o->setParent((QMainWindow*)(mHympInterface->mainWindow()));
 				}
 				else
 				{
-					qDebug() << (QString("plugin parent already set"));
+					qDebug() << (QString("plugin %1 parent already set").arg(baseName));
 				}
 			}
 		}
 		else
 		{
 			// something went wrong
-			QMessageBox::warning(mHympInterface->mainWindow(), QObject::tr("Error Loading Plugin"),
-				QObject::tr("There was an error loading a plugin."
-				"The following diagnostic information may help the QGIS developers resolve the issue:\n%1.")
+			QMessageBox::warning(0, QObject::tr("Error Loading Plugin"),
+				QObject::tr("There was an error loading %1 plugin.")
 				.arg(myError));
 		}
 	}
 	else
 	{
-		qDebug()<< (QObject::tr("Unable to find the class factory for %1.").arg(theFullPathName), QObject::tr("Plugins"));
+		QMessageBox::warning(0, QObject::tr("Error Loading Plugin"),
+			QObject::tr("Unable to find the class factory for %1.")
+			.arg(theFullPathName));
 	}
 
 }
